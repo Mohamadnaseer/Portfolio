@@ -5,10 +5,12 @@ import Contact from '@/models/Contact';
 export async function POST(req: Request) {
   try {
     const body = await req.json();
+    const { name, email, subject, message } = body;
+    
     await dbConnect();
     
     // Mongoose validates automatically when creating the document
-    const contact = await Contact.create(body);
+    const contact = await Contact.create({ name, email, subject, message });
     
     return NextResponse.json(
       { message: 'Message sent successfully', data: contact },
